@@ -60,7 +60,10 @@ const BookingSchema = new Schema({
         default: false
     },
 
-
+    checkoutFinished: {
+        type: Boolean,
+        default: false
+    },
 
     payments: [PaymentSchema]
 });

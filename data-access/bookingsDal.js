@@ -92,7 +92,9 @@ async function createBooking(data) {
     return res;
 }
 
+
 async function doCheckOut(data) {
+    let booking = await Booking.findById(data.id);
 
 }
 

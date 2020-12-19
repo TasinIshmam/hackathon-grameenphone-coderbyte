@@ -7,6 +7,7 @@ const bookingsDal = require('../data-access/bookingsDal');
 
 
 // must have initialdeposit field which is added as first payment.
+// create booking
 router.post('/', async (req, res, next) => {
 
     try {
@@ -19,6 +20,7 @@ router.post('/', async (req, res, next) => {
 });
 
 
+//get all bookings
 router.get('/', async (req, res, next) => {
 
     try {
@@ -31,6 +33,7 @@ router.get('/', async (req, res, next) => {
 });
 
 
+// get booking by Id
 router.get('/:id', async (req, res, next) => {
     try {
         let room = await bookingsDal.getBookingById(req.params.id);
@@ -40,6 +43,21 @@ router.get('/:id', async (req, res, next) => {
         next(e);
     }
 })
+
+
+
+// //update booking
+// router.put('/:id', async (req, res, next) => {
+//     try {
+//         let room = await bookingsDal.getBookingById(req.params.id);
+//         return res.status(200).send(room);
+//     } catch (e) {
+//         console.log(e);
+//         next(e);
+//     }
+// })
+
+
 
 
 
