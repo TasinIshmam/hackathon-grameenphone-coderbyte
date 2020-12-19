@@ -1,58 +1,89 @@
-# Express Template
+# Booking API
 
-A template for medium sized express applications. Somewhat opinionated. 
+## GP Hackathon Problem Statement
 
-### Stack
+Develop a hotel booking system using REST API. The hotel has 10 rooms, customers need to be registered. Customers can book one room with arrival & checkout time. During booking, the customer can pay the partial or full amount. Later during checkout, will pay any due amounts. Another customer cannot book the same room between the existing arrival & checkout time. There should be a booking list with customer name, booked room number with arrival, checkout date time, and total paid amount.
 
-- MongoDB as Database
-- EJS for Server Side Rendering
-- Winston for Logging
-- In memory cache (Change appropriately in production)
-- In memory rate limiter (Change appropriately in production)
+- These are the basic DB tables with minimum fields. You can add/modify table and columns according to your design.
 
+## Run Server
 
+1. Set Project Directory as Current Working Directory
+2. Install the Dependencies
 
-### Style Guide
+   ```sh
+   npm install --save
+   ```
+4. Install mongodb. 
+3. Create .env file and keep it in the Project Root
 
-- lowerCamelCase for variables/objects (lowerCamelCase should be the default pretty much everything)
-- UpperCamelCase for class names
-- kebab-case for file names 
-- lowerCamelCase for mongodb collections, fields, models
-- Reference: [Style Guide for NodeJS](https://github.com/felixge/node-style-guide)
+   ```sh
+   # .env file
 
+    NODE_ENV=<development | production>  
+    AUTH_SECRET_KEY=<secret_key> (random string)
+    MONGODB_URI_LOCAL=<mongo_local_uri>
+    MONGODB_URI_ATLAS=<mongo_atlas_uri>
+    PORT=3006 
+   ```
+5. Initialize database
+    ```
+    npm run init-db
+    ```
+4. a. For starting server in **development** mode, run
 
-### Conventions
+   ```sh
+   npm run dev
+   ```
 
-- Store tests next to the code
+   or
 
+   ```sh
+   npm run start-development
+   ```
 
+   b. For starting server in **production** mode, run
 
-### Logging To Console
- 
-* Import logger from services/logger.js. **Do not use console for logging, it becomes a mess in production**.  
-* Use appropriate log levels. 
-    * logger.error for error logging
-    * logger.info for generic maintenance logs
-    * logger.debug for debugging (won't show up in production logs)
-    * Optionally, logger.warn for something between error and info. 
-* [Read More about logging](https://www.twilio.com/blog/guide-node-js-logging)
-    
-    
-### Thoughts on scaling
+   ```sh
+   npm run start-production
+   ```
 
-Ideally, you shouldn't be serving static assets from your express application. For production/performance sensitive applications, consider serving your static assets from a CDN of some kind instead (Eg - AWS Cloudfront).
-[Read More](https://softwareontheroad.com/nodejs-scalability-issues/?utm_source=github&utm_medium=readme#jobs)
+## Dependencies
 
+### dependencies
 
-### Additional Reading
+- app-root-path: ^3.0.0,
+- bcrypt: ^5.0.0,
+- cookie-parser: ~1.4.4,
+- debug: ~2.6.9,
+- ejs: ~2.6.1,
+- express: ~4.16.1,
+- helmet: ^3.22.0,
+- http-errors: ~1.6.3,
+- jsonwebtoken: ^8.5.1,
+- moment: ^2.29.1,
+- mongoose: ^5.9.7,
+- mongoose-beautiful-unique-validation: ^7.1.1,
+- mongoose-validator: ^2.1.0,
+- morgan: ~1.9.1,
+- node-cache: ^5.1.2,
+- passport: ^0.4.1,
+- passport-jwt: ^4.0.0,
+- passport-local: ^1.0.0,
+- rate-limiter-flexible: ^2.1.3,
+- split: ^1.0.1,
+- swagger-jsdoc: ^6.0.0-rc.5,
+- swagger-ui-express: ^4.1.5,
+- validator: ^10.11.0,
+- winston: ^3.2.1
 
-- [Style Guide for NodeJS](https://github.com/felixge/node-style-guide)
-- [Structuring Express Applications](https://softwareontheroad.com/ideal-nodejs-project-structure/?utm_source=github&utm_medium=readme#configs)
-- [Express Service Oriented Architecture](https://www.codementor.io/@evanbechtol/node-service-oriented-architecture-12vjt9zs9i)
-    
+### devDependencies:
 
+- cross-env: ^7.0.2,
+- dotenv: ^8.2.0,
+- eslint: ^5.16.0,
+- nodemon: ^2.0.4
 
-### GP problem statement 
+### engines
 
-
-
+- node: 12.x.x
