@@ -32,7 +32,7 @@ async function getRoomById(id) {
         return response.data;
     } else {
         logger.debug("Cache miss");
-        let result = await Room.findOne({"id": id});
+        let result = await Room.findById(id);
         if (result === undefined || result === null) return {};
         cache.setCacheWithExpiration(key, result, EXPIRATION_TIME);
         return result;

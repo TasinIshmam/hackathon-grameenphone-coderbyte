@@ -22,7 +22,7 @@ async function getCustomerById(id) {
                 return response.data;
         } else {
                 logger.debug("Cache miss");
-                let result = await Customer.findOne({"id": id});
+                let result = await Customer.findById(id);
 
                 if (result === undefined || result === null) return {};
 

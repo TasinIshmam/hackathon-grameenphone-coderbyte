@@ -19,6 +19,16 @@ router.get('/rooms', async (req, res, next) => {
     }
 });
 
+router.get('/rooms/:id', async (req, res, next) => {
+    try {
+        let room = await roomDal.getRoomById(req.params.id);
+        return res.status(200).send(room);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+})
+
 
 
 

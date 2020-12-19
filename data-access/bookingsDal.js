@@ -22,7 +22,7 @@ async function getBookingById(id) {
         return response.data;
     } else {
         logger.debug("Cache miss");
-        let result = await Booking.findOne({"id": id});
+        let result = await Booking.findById(id);
         if (result === undefined || result === null) return {};
         cache.setCacheWithExpiration(key, result, EXPIRATION_TIME);
         return result;
