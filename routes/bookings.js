@@ -12,7 +12,7 @@ router.post('/', async (req, res, next) => {
 
     try {
         let booking = await bookingsDal.createBooking(req.body);
-        res.status(200).send(booking);
+        res.status(201).send(booking);
     } catch(e) {
         logger.error(e);
         next(e);
@@ -43,6 +43,18 @@ router.get('/:id', async (req, res, next) => {
         next(e);
     }
 })
+
+router.put('/:id/checkout', async (req, res, next) => {
+
+    try {
+        let response = await bookingsDal.doCheckOut(req.params.id);
+        return res.status(200).send(response);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+
+    });
 
 
 

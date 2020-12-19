@@ -93,14 +93,35 @@ async function createBooking(data) {
 }
 
 
-async function doCheckOut(data) {
-    let booking = await Booking.findById(data.id);
+async function doCheckOut(bookingId) {
 
+    let booking = await Booking.findById(bookingId);
+    if (!booking) {
+        throw Error("No such booking");
+    }
+    let room = await Room.findById(booking.roomId);
+
+    if (!booking.paymentIsComplete) {
+        // make due payments.
+
+        let amountLeft = room.price - booking.payments[0].amount;
+        booking.payments.push({
+            amount: amountLeft
+        })
+
+        booking.paymentIsComplete = true;
+    }
+
+    booking.checkoutFinished = true;
+
+    const updated = await booking.save();
+    cache.myCache.flushAll(); //flush casche on update.
+    return updated;
 }
 
 
 async function getAllBookingsForRoom(roomId) {
-    let data = await Booking.find({roomId: roomId});
+    let data = await Booking.find({roomId: roomId, checkoutFinished: false});
     return data;
 }
 
@@ -134,4 +155,4 @@ async function getAllBookings() {
 
 }
 
-module.exports = {createBooking, getAllBookings, getBookingById, getAllBookingsForRoom};
+module.exports = {createBooking, getAllBookings, getBookingById, getAllBookingsForRoom, doCheckOut};
