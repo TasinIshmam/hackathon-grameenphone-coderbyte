@@ -29,6 +29,11 @@ async function createBooking(data) {
         throw Error("No such room");
     }
 
+    let roomIsAvailable = await roomDal.checkIfRoomAvailableOnDateRange(data.roomId, data.arrival, data.checkout )
+
+    if (!roomIsAvailable) {
+        throw Error("Room not available on date range.");
+    }
     if (room.price <= data.initialDeposit) {
         data.initialDeposit = room.price;
         data.paymentIsComplete = true;
