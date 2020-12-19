@@ -17,22 +17,18 @@ const RoomSchema = new Schema({
     },
 
     isLocked: {
-        type: Schema.Types.ObjectId,
-        ref: 'Room'
+        type: Boolean,
+        default: false
     },
 
-    customerId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Customer'
+    maxPersons: {
+        type: Number,
+        required: true
     },
 
-    bookType: {
+    roomType: {
         type: String,
-        required: [true, 'Number of nights is required']
-    },
-    bookTime: {
-        type: Date,
-        default: Date.now
+        default: "Regular"
     }
 });
 
