@@ -11,7 +11,7 @@ mongoose.connect( config.mongodbURI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    autoIndex: false   //Mongoose no longer automatically creates indices. Do it manually by calling createIndex() in the model files.
+    autoIndex: true   //auto indexing for simplicity.
 }).then(() => logger.info("You are connected to the database"))
     .catch((err) => {
         logger.error(err)

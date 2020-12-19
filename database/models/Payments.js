@@ -11,7 +11,7 @@ const PaymentSchema = new Schema({
         ref: 'Customer'
     },
 
-    BookingId: {
+    bookingId: {
         type: Schema.Types.ObjectId,
         ref: 'Booking'
     },
@@ -26,6 +26,7 @@ const PaymentSchema = new Schema({
         default: Date.now
     }
 });
+
 
 const Payment = mongoose.model('Payment', PaymentSchema);
 

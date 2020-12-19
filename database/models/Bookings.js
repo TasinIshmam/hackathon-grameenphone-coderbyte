@@ -29,6 +29,7 @@ const BookingSchema = new Schema({
         type: Number,
         default: 1,
     },
+
     bookType: {
         type: String,
         required: [true, 'Number of nights is required']
