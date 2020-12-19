@@ -40,40 +40,7 @@ async function getRoomById(id) {
     }
 }
 
-//todo finish
-async function checkIfRoomAvailableOnDateRange(roomId, startDate, endDate) {
 
-    let startDateBegin = moment(startDate).format('YYYY-MM-DD').startOf('day');
-    let endDateBegin = moment(endDate).format('YYYY-MM-DD').startOf('day');
 
-    let bookings = await bookingsDal.getAllBookingsForRoom(roomId);
-
-    let room = await Room.findById(roomId);
-
-    if (!room) {
-        return false;
-    }
-
-    for(let i = 0; i < bookings.length; i++) {
-        let bookingsArrivalMoment = moment(bookings[i].arrival);
-        let bookingsDepartureMoment = moment(bookings[i].checkout);
-
-        //if start date in query is in middle of a booking, then room not available
-        if(startDateBegin.isSameOrAfter(bookingsArrivalMoment) && startDateBegin.isSameOrBefore(bookingsDepartureMoment)) {
-            return false;
-        }
-
-        //if end date in query in middle of a booking, then room not avaialble.
-        if(endDateBegin.isSameOrAfter(bookingsArrivalMoment) && endDateBegin.isSameOrBefore(bookingsDepartureMoment)) {
-            return false;
-        }
-
-    }
-
-    // if passed through previous loop then no conflicts.
-    return true;
-
-}
-
-module.exports = {getAllRooms, getRoomById, checkIfRoomAvailableOnDateRange}
+module.exports = {getAllRooms, getRoomById}
 

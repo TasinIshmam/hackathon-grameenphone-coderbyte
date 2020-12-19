@@ -3,11 +3,51 @@ const cache = require('../services/cache');
 const logger = require("../services/logger");
 const customersDal = require('./customersDal');
 const roomDal = require('./roomsDal');
+const Room = require('../database/models/Rooms');
 const EXPIRATION_TIME = 900;
+const moment = require('moment');
+
 
 let keyBookingsAll = "bookings_all";
 
 //todo make sure initial deposit does not exceed room cost.
+
+
+//weird bug, couldn' export from roomsDal. Really hacky fix.
+async function checkIfRoomAvailableOnDateRange(roomId, startDate, endDate) {
+
+    let startDateBegin = moment(startDate);
+    let endDateBegin = moment(endDate);
+
+    let bookings = await getAllBookingsForRoom(roomId);
+
+    let room = await Room.findById(roomId);
+
+    if (!room) {
+        return false;
+    }
+
+    for(let i = 0; i < bookings.length; i++) {
+        let bookingsArrivalMoment = moment(bookings[i].arrival);
+        let bookingsDepartureMoment = moment(bookings[i].checkout);
+
+        //if start date in query is in middle of a booking, then room not available
+        if(startDateBegin.isSameOrAfter(bookingsArrivalMoment) && startDateBegin.isSameOrBefore(bookingsDepartureMoment)) {
+            return false;
+        }
+
+        //if end date in query in middle of a booking, then room not avaialble.
+        if(endDateBegin.isSameOrAfter(bookingsArrivalMoment) && endDateBegin.isSameOrBefore(bookingsDepartureMoment)) {
+            return false;
+        }
+
+    }
+
+    // if passed through previous loop then no conflicts.
+    return true;
+
+}
+
 
 async function createBooking(data) {
 
@@ -23,13 +63,13 @@ async function createBooking(data) {
         throw Error("No such customer");
     }
 
-    let room = await roomDal.getRoomById(data.roomId);
+    let room = await Room.findById(data.roomId);
 
     if (!room) {
         throw Error("No such room");
     }
 
-    let roomIsAvailable = await roomDal.checkIfRoomAvailableOnDateRange(data.roomId, data.arrival, data.checkout )
+    let roomIsAvailable = await checkIfRoomAvailableOnDateRange(data.roomId, data.arrival, data.checkout )
 
     if (!roomIsAvailable) {
         throw Error("Room not available on date range.");

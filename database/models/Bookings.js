@@ -29,7 +29,8 @@ const BookingSchema = new Schema({
 
     roomId: {
         type: Schema.Types.ObjectId,
-        ref: 'Room'
+        ref: 'Room',
+        required: [true, 'roomId date is required']
     },
 
     //todo add room name.
