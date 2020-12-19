@@ -64,9 +64,50 @@ app.use(`/api/${apiVersion}/users`, limiter.rateLimiterMiddlewareInMemory, userR
 
 // app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, paymentsRouter);
 
+const options = {
+  swaggerDefinition: {
+    openapi: "3.0.1",
+    info: {
+      title: "Booking API",
+      version: "0.1.0",
+      description:
+        "This is a simple hotel booking application made with Express and documented with Swagger",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      },
+      contact: {
+        name: "Tasin Ishmam",
+        url: "https://tasinishmam.com",
+        email: "tasinishmam@gmail.com",
+      },
+    },
+    servers: [
+      {
+        url: `http://localhost:${process.env.PORT}/api/` + apiVersion,
+      },
+    ],
+    components: {
+      securitySchemes: {
+        apiKey: {
+          type: "apiKey",
+          name: "secret_token",
+          in: "header",
+        },
+      },
+    },
+  },
+  apis: [
+    "./routes/bookings.js",
+    "./routes/customers.js",
+    "./routes/payments.js",
+    "./routes/rooms.js",
+    "./routes/users.js",
+  ],
+};
 
-// app.use("/user", , secureRoute);
-
+const specs = swaggerJsdoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -81,7 +122,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
 });
 
 

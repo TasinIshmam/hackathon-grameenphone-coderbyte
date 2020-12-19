@@ -6,6 +6,34 @@ require("../services/auth");
 
 const User = require("../database/models/Users");
 
+
+/**
+ * @swagger
+ * /users/signup:
+ *  post:
+ *    tags:
+ *    - user
+ *    summary: Create user
+ *    description: Create new user.
+ *    operationId: signupUser
+ *    requestBody:
+ *      description: User object
+ *      content:
+ *        'application/json':
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *              password:
+ *                type: string
+ *      required: true
+ *    responses:
+ *      '201':
+ *        description: Returns created user object with token
+ *      '400':
+ *        description: Returns error message
+ */
 router.post(
   "/signup",
   passport.authenticate("signup", { session: false }),
@@ -17,6 +45,34 @@ router.post(
   }
 );
 
+
+/**
+ * @swagger
+ * /users/login:
+ *  post:
+ *    tags:
+ *    - user
+ *    summary: User LogIn
+ *    description: User LogIn
+ *    operationId: loginUser
+ *    requestBody:
+ *      description: LogIn Credentials
+ *      content:
+ *        'application/json':
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *              password:
+ *                type: string
+ *      required: true
+ *    responses:
+ *      '200':
+ *        description: Returns user's token
+ *      '400':
+ *        description: Returns error message
+ */
 router.post("/login", async (req, res, next) => {
   passport.authenticate("login", async (err, user, info) => {
     try {
