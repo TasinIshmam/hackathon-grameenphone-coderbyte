@@ -14,10 +14,12 @@ const helmet = require('helmet');
 
 //local imports
 let indexRouter = require('./routes/index');
-let apiRouter = require('./routes/api');
+let apiRouter = require('./routes/rooms');
 let limiter = require('./middleware/rate-limiter-middleware');
 const logger = require('./services/logger');
 
+let swaggerJsdoc = require("swagger-jsdoc");
+let swaggerUi = require("swagger-ui-express");
 
 
 //express
@@ -38,6 +40,42 @@ app.use(helmet())
 app.use('/', indexRouter);
 app.use('/api', limiter.rateLimiterMiddlewareInMemory, apiRouter);
 
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Booking API",
+      version: "0.1.0",
+      description:
+          "This is a simple CRUD API application made with Express and documented with Swagger",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      },
+      contact: {
+        name: "Tasin Ishmam",
+        url: "https://tasinishmam.com",
+        email: "tasinishmam@gmail.com",
+      },
+    },
+    servers: [
+      {
+        url: "http://localhost:3000/rooms",
+      },
+    ],
+  },
+  apis: ["./routes/rooms.js"],
+};
+
+
+
+const specs = swaggerJsdoc(options);
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs)
+);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

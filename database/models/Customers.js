@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const validate = require('mongoose-validator');
+const validator = require('validator');
 
 // create user Schema and model
 const CustomerSchema = new Schema({
@@ -14,7 +14,12 @@ const CustomerSchema = new Schema({
     },
     email: {
         type: String,
-        required: [true, 'Email field is required']
+        required: [true, 'Email field is required'],
+        unique: true,
+        validate: {
+            validator: validator.isEmail,
+            message: '{VALUE} is not a valid email'
+        }
     },
     phone: {
         type: String,
