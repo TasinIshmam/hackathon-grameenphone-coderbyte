@@ -4,19 +4,23 @@ var router = express.Router();
 
 
 const Customer = require('../database/models/Customers');
-const Room = require('../database/models/Rooms');
+const roomDal = require('../data-access/roomsDal');
 
 
 //get all rooms
-router.get('/rooms', (req, res, next) => {
+router.get('/rooms', async (req, res, next) => {
 
     try {
-        let allRooms = await Room.find({});
+        let allRooms = await roomDal.getAllRooms();
+        res.status(200).send(allRooms);
     } catch(e) {
         console.log(e);
         next(e);
     }
 });
+
+
+
 
 
 

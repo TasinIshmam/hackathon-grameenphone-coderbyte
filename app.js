@@ -13,8 +13,7 @@ let morgan = require('morgan');
 const helmet = require('helmet');
 
 //local imports
-let indexRouter = require('./routes/index');
-let apiRouter = require('./routes/rooms');
+
 let limiter = require('./middleware/rate-limiter-middleware');
 const logger = require('./services/logger');
 
@@ -36,11 +35,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet())
+
+
+const apiVersion = "v1";
+
 //routers
+let indexRouter = require('./routes/index');
+let roomsRouter = require('./routes/rooms');
+let customersRouter = require('./routes/customers');
+
 app.use('/', indexRouter);
-app.use('/api', limiter.rateLimiterMiddlewareInMemory, apiRouter);
+app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, roomsRouter);
+app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
 
 
+//swagger
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -92,21 +101,21 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-process.on('SIGINT', async function() {
-  //todo shift from console.error to something more...reasonable
-  console.error('SIGINT called');
-  await mongoose.disconnect();
-  console.error('Mongoose connection terminated');
-  process.exit(0);
-});
-
-process.on('SIGTERM', async function() {
-  console.error('SIGTERM called');
-  await mongoose.disconnect();
-  console.error('Mongoose connection terminated');
-  process.exit(0);
-});
+//
+// process.on('SIGINT', async function() {
+//   //todo shift from console.error to something more...reasonable
+//   console.error('SIGINT called');
+//   await mongoose.disconnect();
+//   console.error('Mongoose connection terminated');
+//   process.exit(0);
+// });
+//
+// process.on('SIGTERM', async function() {
+//   console.error('SIGTERM called');
+//   await mongoose.disconnect();
+//   console.error('Mongoose connection terminated');
+//   process.exit(0);
+// });
 
 
 module.exports = app;

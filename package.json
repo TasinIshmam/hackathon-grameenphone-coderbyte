@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "start-development": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www",
     "start-production": "cross-env NODE_ENV=production node -r dotenv/config ./bin/www",
-    "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config ./bin/www",
+    "dev": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www",
     "init-db": "cross-env NODE_ENV=development node -r dotenv/config ./playground/initDatabase"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "express": "~4.16.1",
     "helmet": "^3.22.0",
     "http-errors": "~1.6.3",
+    "moment": "^2.29.1",
     "mongoose": "^5.9.7",
     "mongoose-beautiful-unique-validation": "^7.1.1",
     "mongoose-validator": "^2.1.0",

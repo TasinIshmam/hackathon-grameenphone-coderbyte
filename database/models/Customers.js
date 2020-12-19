@@ -4,7 +4,7 @@ const validator = require('validator');
 
 // create user Schema and model
 const CustomerSchema = new Schema({
-    firstname: {
+    firstName: {
         type: String,
         required: [true, 'Name field is required']
     },
