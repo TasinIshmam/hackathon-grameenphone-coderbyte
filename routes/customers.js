@@ -29,4 +29,15 @@ router.get('/customers', async (req, res, next) => {
     }
 });
 
+
+router.get('/customers/:id', async (req, res, next) => {
+    try {
+        let room = await customerDal.getCustomerById(req.params.id);
+        return res.status(200).send(room);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+})
+
 module.exports = router;

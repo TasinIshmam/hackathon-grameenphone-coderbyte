@@ -31,5 +31,16 @@ router.get('/bookings', async (req, res, next) => {
 });
 
 
+router.get('/bookings/:id', async (req, res, next) => {
+    try {
+        let room = await bookingsDal.getBookingById(req.params.id);
+        return res.status(200).send(room);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+})
+
+
 
 module.exports = router;
