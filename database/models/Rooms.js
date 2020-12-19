@@ -8,7 +8,8 @@ const RoomSchema = new Schema({
 
     roomNumber: {
         type: String,
-        required: [true, 'Room Number field is required']
+        required: [true, 'Room Number field is required'],
+        unique: true
     },
 
     price: {
