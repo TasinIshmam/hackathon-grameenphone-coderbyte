@@ -49,17 +49,13 @@ let userRouter = require('./routes/users');
 
 
 app.use('/', indexRouter);
-app.use(`/api/${apiVersion}/rooms`, limiter.rateLimiterMiddlewareInMemory, roomsRouter);
-app.use(`/api/${apiVersion}/customers`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
-app.use(`/api/${apiVersion}/bookings`,  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
+// app.use(`/api/${apiVersion}/rooms`, limiter.rateLimiterMiddlewareInMemory, roomsRouter);
+// app.use(`/api/${apiVersion}/customers`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
+// app.use(`/api/${apiVersion}/bookings`,  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
 
-
-//versions with auth turned off for dev convenience.
-
-// app.use(`/api/${apiVersion}/rooms`, passport.authenticate("jwt", { session: true }), limiter.rateLimiterMiddlewareInMemory, roomsRouter);
-// app.use(`/api/${apiVersion}/customers`, passport.authenticate("jwt", { session: true }),limiter.rateLimiterMiddlewareInMemory, customersRouter);
-// app.use(`/api/${apiVersion}/bookings`, passport.authenticate("jwt", { session: true }),  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
-
+app.use(`/api/${apiVersion}/rooms`, passport.authenticate("jwt", { session: true }), limiter.rateLimiterMiddlewareInMemory, roomsRouter);
+app.use(`/api/${apiVersion}/customers`, passport.authenticate("jwt", { session: true }),limiter.rateLimiterMiddlewareInMemory, customersRouter);
+app.use(`/api/${apiVersion}/bookings`, passport.authenticate("jwt", { session: true }),  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
 app.use(`/api/${apiVersion}/users`, limiter.rateLimiterMiddlewareInMemory, userRouter);
 
 // app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, paymentsRouter);

@@ -36,13 +36,13 @@ Develop a hotel booking system using REST API. The hotel has 10 rooms, customers
    or
 
    ```sh
-   npm run start-development
+   npm run start-dev
    ```
 
-   b. For starting server in **production** mode, run
+   b. For starting server in **production** mode, run (env files must be provided manually)
 
    ```sh
-   npm run start-production
+   npm run start
    ```
 
 ## Dependencies
