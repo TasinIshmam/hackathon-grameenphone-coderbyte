@@ -18,7 +18,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"arrival\" : \"2020-01-02\",\r\n    \"checkout\": \"2020-01-03\",\r\n    \"roomId\": \"5fddeeffe15c06c3ca450dc2\", \r\n    \"customerId\" : \"5fddeeffe15c06c3ca450dc8\",\r\n    \"bookType\" : \"Generic\",\r\n    \"initialDeposit\": 50\r\n    \r\n}",
+					"raw": "{\r\n    \"arrival\" : \"2020-01-07\",\r\n    \"checkout\": \"2020-01-09\",\r\n    \"roomId\": \"5fddeeffe15c06c3ca450dcb\", \r\n    \"customerId\" : \"5fddeeffe15c06c3ca450dcc\",\r\n    \"bookType\" : \"Generic\",\r\n    \"initialDeposit\": 50\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -134,37 +134,6 @@
 			"response": []
 		},
 		{
-			"name": "GET Users",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"tasinishmam@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3006/api/v1/users/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3006",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "PUT Bookings checkout",
 			"request": {
 				"method": "PUT",
@@ -185,7 +154,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3006/api/v1/bookings/5fddeeffe15c06c3ca450dcb/checkout",
+					"raw": "http://localhost:3006/api/v1/bookings/5fddeeffe15c06c3ca450dce/checkout",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -195,7 +164,7 @@
 						"api",
 						"v1",
 						"bookings",
-						"5fddeeffe15c06c3ca450dcb",
+						"5fddeeffe15c06c3ca450dce",
 						"checkout"
 					]
 				}

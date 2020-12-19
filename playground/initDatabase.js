@@ -9,7 +9,7 @@ const Rooms = require('../database/models/Rooms');
 
 
 let roomsData = [
-    {   _id:  mongoose.Types.ObjectId(),
+    {   _id:  mongoose.Types.ObjectId("5fddeeffe15c06c3ca450dcb"),
         roomNumber: "A1",
         price: 100,
         isLocked: false,
@@ -59,7 +59,7 @@ let roomsData = [
 ]
 
 let customersData = [
-    {_id:  mongoose.Types.ObjectId(),
+    {_id:  mongoose.Types.ObjectId("5fddeeffe15c06c3ca450dcc"),
         firstName: "name1",
         lastName: "last1",
         email: "first@gmail.com",
@@ -86,7 +86,7 @@ let bookingsData = [
     {
         numberOfPeople: 1,
         bookType: "Generic",
-        _id: mongoose.Types.ObjectId(),
+        _id: mongoose.Types.ObjectId("5fddeeffe15c06c3ca450dce"),
         arrival: "2020-01-01T00:00:00.000Z",
         checkout: "2020-01-03T00:00:00.000Z",
         roomId:  roomsData[0]._id,
