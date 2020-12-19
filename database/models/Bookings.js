@@ -20,6 +20,8 @@ const BookingSchema = new Schema({
         ref: 'Room'
     },
 
+    //todo add room name.
+
     customerId: {
         type: Schema.Types.ObjectId,
         ref: 'Customer'
@@ -32,7 +34,8 @@ const BookingSchema = new Schema({
 
     bookType: {
         type: String,
-        required: [true, 'Number of nights is required']
+        required: [true, 'Mention the type of booking'],
+        default: "Generic"
     },
     bookTime: {
         type: Date,

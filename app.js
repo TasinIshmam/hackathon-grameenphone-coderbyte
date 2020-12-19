@@ -43,11 +43,14 @@ const apiVersion = "v1";
 let indexRouter = require('./routes/index');
 let roomsRouter = require('./routes/rooms');
 let customersRouter = require('./routes/customers');
+let bookingsRouter = require('./routes/bookings');
+let paymentsRouter = require('./routes/payments');
 
 app.use('/', indexRouter);
 app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, roomsRouter);
 app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
-
+app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
+// app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, paymentsRouter);
 
 //swagger
 const options = {
@@ -101,21 +104,21 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//
-// process.on('SIGINT', async function() {
-//   //todo shift from console.error to something more...reasonable
-//   console.error('SIGINT called');
-//   await mongoose.disconnect();
-//   console.error('Mongoose connection terminated');
-//   process.exit(0);
-// });
-//
-// process.on('SIGTERM', async function() {
-//   console.error('SIGTERM called');
-//   await mongoose.disconnect();
-//   console.error('Mongoose connection terminated');
-//   process.exit(0);
-// });
+
+process.on('SIGINT', async function() {
+  //todo shift from console.error to something more...reasonable
+  console.error('SIGINT called');
+  await mongoose.disconnect();
+  console.error('Mongoose connection terminated');
+  process.exit(0);
+});
+
+process.on('SIGTERM', async function() {
+  console.error('SIGTERM called');
+  await mongoose.disconnect();
+  console.error('Mongoose connection terminated');
+  process.exit(0);
+});
 
 
 module.exports = app;

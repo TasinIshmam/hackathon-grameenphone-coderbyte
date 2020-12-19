@@ -64,4 +64,4 @@ function setCacheWithExpiration(key, val, exp) {
     }
 }
 
-module.exports = {getCachedData, setCache, setCacheWithExpiration};
+module.exports = {getCachedData, setCache, setCacheWithExpiration, myCache};

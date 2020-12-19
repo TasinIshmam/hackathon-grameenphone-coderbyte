@@ -21,7 +21,7 @@ if (env === 'development') {
 module.exports = {
     mongodbURI : process.env.MONGODB_URI,
     port: process.env.PORT,
-    logLevel: process.env.LOG_LEVEL || "info",
+    logLevel: process.env.LOG_LEVEL || "debug",
 };
 
 

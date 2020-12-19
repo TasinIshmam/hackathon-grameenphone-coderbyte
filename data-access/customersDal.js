@@ -1,19 +1,38 @@
 const Customer = require('../database/models/Customers');
 const cache = require('../services/cache');
-const moment = require('moment');
 const logger = require("../services/logger");
 
 const EXPIRATION_TIME = 900;
 
+const keyCustomersAll = "customers_all";
 
 async function createCustomer(data) {
         let res = await Customer.create(data);
         cache.setCacheWithExpiration("customer" + res._id, res, EXPIRATION_TIME);
+        cache.myCache.del(keyCustomersAll);
         return res;
 }
 
+
+async function getCustomerById(id) {
+        let key = "customers_" + id;
+        let response = cache.getCachedData(key);
+
+        if (response.status) {
+                return response.data;
+        } else {
+                logger.debug("Cache miss");
+                let result = await Customer.findOne({"id": id});
+
+                if (result === undefined || result === null) return {};
+
+                cache.setCacheWithExpiration(key, result, EXPIRATION_TIME);
+                return result;
+        }
+}
+
 async function getAllCustomers() {
-        let key = "customers_all";
+        let key = keyCustomersAll
         let response = cache.getCachedData(key);
 
         if (response.status) {
@@ -26,4 +45,4 @@ async function getAllCustomers() {
         }
 }
 
-module.exports = {createCustomer, getAllCustomers}
+module.exports = {createCustomer, getAllCustomers, getCustomerById}
