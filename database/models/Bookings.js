@@ -1,7 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const PaymentSchema = new Schema({
 
+
+    amount: {
+        type: Number,
+        required: true
+    },
+
+    paymentTime: {
+        type: Date,
+        default: Date.now
+    }
+});
 
 // create booking Schema and model
 const BookingSchema = new Schema({
@@ -40,7 +52,9 @@ const BookingSchema = new Schema({
     bookTime: {
         type: Date,
         default: Date.now
-    }
+    },
+
+    payments: [PaymentSchema]
 });
 
 const Booking = mongoose.model('Booking', BookingSchema);
