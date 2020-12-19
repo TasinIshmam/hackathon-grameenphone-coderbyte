@@ -25,6 +25,8 @@ const CustomerSchema = new Schema({
         type: String,
         required: [true, 'Phone number field is required']
     },
+
+
     registeredAt: {
         type: Date,
         default: Date.now

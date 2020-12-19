@@ -1,4 +1,5 @@
 const Room = require('../database/models/Rooms');
+const bookingsDal = require('./bookingsDal');
 const cache = require('../services/cache');
 const moment = require('moment');
 const logger = require("../services/logger");
@@ -40,12 +41,16 @@ async function getRoomById(id) {
 }
 
 //todo finish
-async function getAvailableRoomsOnDate(startDate, endDate) {
+async function checkIfRoomAvailable(roomId, startDate, endDate) {
 
     let startDateBegin = startDate.clone().startOf('day');
     let endDateEnd = endDate.clone().endOf('day');
 
+    let bookings = await bookingsDal.getAllBookingsForRoom(roomId);
+
+
+
 }
 
-module.exports = {getAllRooms, getRoomById}
+module.exports = {getAllRooms, getRoomById, checkIfRoomAvailable}
 

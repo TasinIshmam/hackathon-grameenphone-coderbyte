@@ -11,6 +11,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let morgan = require('morgan');
 const helmet = require('helmet');
+const passport = require("passport");
 
 //local imports
 
@@ -44,50 +45,29 @@ let indexRouter = require('./routes/index');
 let roomsRouter = require('./routes/rooms');
 let customersRouter = require('./routes/customers');
 let bookingsRouter = require('./routes/bookings');
-let paymentsRouter = require('./routes/payments');
+let userRouter = require('./routes/users');
+
 
 app.use('/', indexRouter);
 app.use(`/api/${apiVersion}/rooms`, limiter.rateLimiterMiddlewareInMemory, roomsRouter);
 app.use(`/api/${apiVersion}/customers`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
-app.use(`/api/${apiVersion}/bookings`, limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
+app.use(`/api/${apiVersion}/bookings`,  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
+
+
+//versions with auth turned off for dev convenience.
+
+// app.use(`/api/${apiVersion}/rooms`, passport.authenticate("jwt", { session: true }), limiter.rateLimiterMiddlewareInMemory, roomsRouter);
+// app.use(`/api/${apiVersion}/customers`, passport.authenticate("jwt", { session: true }),limiter.rateLimiterMiddlewareInMemory, customersRouter);
+// app.use(`/api/${apiVersion}/bookings`, passport.authenticate("jwt", { session: true }),  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
+
+app.use(`/api/${apiVersion}/users`, limiter.rateLimiterMiddlewareInMemory, userRouter);
+
 // app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, paymentsRouter);
 
-//swagger
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Booking API",
-      version: "0.1.0",
-      description:
-          "This is a simple CRUD API application made with Express and documented with Swagger",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
-      contact: {
-        name: "Tasin Ishmam",
-        url: "https://tasinishmam.com",
-        email: "tasinishmam@gmail.com",
-      },
-    },
-    servers: [
-      {
-        url: "http://localhost:3000/rooms",
-      },
-    ],
-  },
-  apis: ["./routes/rooms.js"],
-};
+
+// app.use("/user", , secureRoute);
 
 
-
-const specs = swaggerJsdoc(options);
-app.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(specs)
-);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -21,6 +21,7 @@ const RoomSchema = new Schema({
         type: Boolean,
         default: false
     },
+    //todo consider removing
 
     maxPersons: {
         type: Number,

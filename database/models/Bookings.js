@@ -27,7 +27,7 @@ const BookingSchema = new Schema({
         required: [true, 'Checkout date is required']
     },
 
-    roomID: {
+    roomId: {
         type: Schema.Types.ObjectId,
         ref: 'Room'
     },
@@ -53,6 +53,13 @@ const BookingSchema = new Schema({
         type: Date,
         default: Date.now
     },
+
+    paymentIsComplete: {
+        type: Boolean,
+        default: false
+    },
+
+
 
     payments: [PaymentSchema]
 });

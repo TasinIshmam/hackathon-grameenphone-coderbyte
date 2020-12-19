@@ -6,7 +6,7 @@ const bookingsDal = require('../data-access/bookingsDal');
 
 
 
-
+// must have initialdeposit field which is added as first payment.
 router.post('/', async (req, res, next) => {
 
     try {

@@ -1,18 +1,61 @@
 const Booking = require('../database/models/Bookings');
 const cache = require('../services/cache');
 const logger = require("../services/logger");
-
+const customersDal = require('./customersDal');
+const roomDal = require('./roomsDal');
 const EXPIRATION_TIME = 900;
 
 let keyBookingsAll = "bookings_all";
 
+//todo make sure initial deposit does not exceed room cost.
+
 async function createBooking(data) {
+
+    data.paymentIsComplete = false; //too little time to set up data sanitizing middleware.
+
+    if (!data.initialDeposit) {
+        throw Error("No initial deposit specified");
+    }
+
+    let customer = await customersDal.getCustomerById(data.customerId);
+
+    if (!customer) {
+        throw Error("No such customer");
+    }
+
+    let room = await roomDal.getRoomById(data.roomId);
+
+    if (!room) {
+        throw Error("No such room");
+    }
+
+    if (room.price <= data.initialDeposit) {
+        data.initialDeposit = room.price;
+        data.paymentIsComplete = true;
+    }
+
+    data.payments = [{
+        amount: data.initialDeposit,
+    }]
+
     let res = await Booking.create(data);
     cache.setCacheWithExpiration("booking" + res._id, res, EXPIRATION_TIME);
-    cache.myCache.del(keyBookingsAll);
+
+    res.message = "Paid extra. Return change";
+    //todo do more granular cache eviction
+    cache.myCache.flushAll();
     return res;
 }
 
+async function doCheckOut(data) {
+
+}
+
+
+async function getAllBookingsForRoom(roomId) {
+    let data = await Booking.find({roomId: roomId});
+    return data;
+}
 
 async function getBookingById(id) {
     let key = "booking" + id;
@@ -44,4 +87,4 @@ async function getAllBookings() {
 
 }
 
-module.exports = {createBooking, getAllBookings, getBookingById};
+module.exports = {createBooking, getAllBookings, getBookingById, getAllBookingsForRoom};
