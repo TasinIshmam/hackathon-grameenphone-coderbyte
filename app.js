@@ -53,6 +53,7 @@ app.use(`/api/${apiVersion}/rooms`, limiter.rateLimiterMiddlewareInMemory, rooms
 app.use(`/api/${apiVersion}/customers`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
 app.use(`/api/${apiVersion}/bookings`,  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
 
+//auth had some bugs. Turning it off. 
 // app.use(`/api/${apiVersion}/rooms`, passport.authenticate("jwt", { session: true }), limiter.rateLimiterMiddlewareInMemory, roomsRouter);
 // app.use(`/api/${apiVersion}/customers`, passport.authenticate("jwt", { session: true }),limiter.rateLimiterMiddlewareInMemory, customersRouter);
 // app.use(`/api/${apiVersion}/bookings`, passport.authenticate("jwt", { session: true }),  limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
