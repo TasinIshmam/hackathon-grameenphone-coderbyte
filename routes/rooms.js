@@ -8,7 +8,7 @@ const roomDal = require('../data-access/roomsDal');
 
 
 //get all rooms
-router.get('/rooms', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 
     try {
         let allRooms = await roomDal.getAllRooms();
@@ -19,7 +19,7 @@ router.get('/rooms', async (req, res, next) => {
     }
 });
 
-router.get('/rooms/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         let room = await roomDal.getRoomById(req.params.id);
         return res.status(200).send(room);

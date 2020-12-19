@@ -47,9 +47,9 @@ let bookingsRouter = require('./routes/bookings');
 let paymentsRouter = require('./routes/payments');
 
 app.use('/', indexRouter);
-app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, roomsRouter);
-app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
-app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
+app.use(`/api/${apiVersion}/rooms`, limiter.rateLimiterMiddlewareInMemory, roomsRouter);
+app.use(`/api/${apiVersion}/customers`, limiter.rateLimiterMiddlewareInMemory, customersRouter);
+app.use(`/api/${apiVersion}/bookings`, limiter.rateLimiterMiddlewareInMemory, bookingsRouter);
 // app.use(`/api/${apiVersion}`, limiter.rateLimiterMiddlewareInMemory, paymentsRouter);
 
 //swagger

@@ -4,10 +4,7 @@ const logger = require("../services/logger");
 
 const customerDal = require('../data-access/customersDal');
 
-
-
-
-router.post('/customers', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 
     try {
         let customer = await customerDal.createCustomer(req.body);
@@ -18,7 +15,7 @@ router.post('/customers', async (req, res, next) => {
     }
 });
 
-router.get('/customers', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 
     try {
         let customer = await customerDal.getAllCustomers();
@@ -30,7 +27,7 @@ router.get('/customers', async (req, res, next) => {
 });
 
 
-router.get('/customers/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         let room = await customerDal.getCustomerById(req.params.id);
         return res.status(200).send(room);

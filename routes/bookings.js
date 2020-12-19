@@ -7,7 +7,7 @@ const bookingsDal = require('../data-access/bookingsDal');
 
 
 
-router.post('/bookings', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 
     try {
         let booking = await bookingsDal.createBooking(req.body);
@@ -19,7 +19,7 @@ router.post('/bookings', async (req, res, next) => {
 });
 
 
-router.get('/bookings', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 
     try {
         let booking = await bookingsDal.getAllBookings();
@@ -31,7 +31,7 @@ router.get('/bookings', async (req, res, next) => {
 });
 
 
-router.get('/bookings/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         let room = await bookingsDal.getBookingById(req.params.id);
         return res.status(200).send(room);
