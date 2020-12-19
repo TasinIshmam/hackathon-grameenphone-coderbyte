@@ -4,18 +4,19 @@ const Schema = mongoose.Schema;
 
 
 // create booking Schema and model
-const BookingSchema = new Schema({
+const RoomSchema = new Schema({
 
-    arrival: {
-        type: Date,
-        required: [true, 'Arrival date is required']
-    },
-    checkout: {
-        type: Date,
-        required: [true, 'Checkout date is required']
+    roomNumber: {
+        type: String,
+        required: [true, 'Room Number field is required']
     },
 
-    roomID: {
+    price: {
+        type: Number,
+        required: [true, "Price is required"]
+    },
+
+    isLocked: {
         type: Schema.Types.ObjectId,
         ref: 'Room'
     },
@@ -25,10 +26,6 @@ const BookingSchema = new Schema({
         ref: 'Customer'
     },
 
-    numberOfPeople: {
-        type: Number,
-        default: 1,
-    },
     bookType: {
         type: String,
         required: [true, 'Number of nights is required']
@@ -39,6 +36,6 @@ const BookingSchema = new Schema({
     }
 });
 
-const Booking = mongoose.model('Booking', BookingSchema);
+const Room = mongoose.model('Room', RoomSchema);
 
-module.exports = Booking;
+module.exports = Room;
